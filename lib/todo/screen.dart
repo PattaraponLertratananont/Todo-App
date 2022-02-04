@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/todo/model.dart';
 
+import 'controller.dart';
+
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({Key? key}) : super(key: key);
 
@@ -9,14 +11,12 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
-  List<TodoModel> todoList = [
-    for (var i = 0; i < 20; i++) TodoModel(title: "Wowza $i", finished: false),
-  ];
+  TodoController controller = TodoController();
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: todoList.length,
+        itemCount: controller.todoList.length,
         itemBuilder: (context, index) {
           return Container(
             decoration: const BoxDecoration(
@@ -25,14 +25,16 @@ class _TodoListScreenState extends State<TodoListScreen> {
               ),
             ),
             child: CheckboxListTile(
-              value: todoList[index].finished,
+              value: controller.todoList[index].finished,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               title: Text(
-                todoList[index].title,
+                controller.todoList[index].title,
                 style: const TextStyle(fontSize: 16),
               ),
-              onChanged: (bool? select) {},
+              onChanged: (bool? select) {
+                setState(() => controller.finishTodo(index));
+              },
             ),
           );
         },
