@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'model.dart';
+import 'package:todo_app/todo/controller.dart';
 
 class TodoList extends StatefulWidget {
   const TodoList({Key? key}) : super(key: key);
@@ -10,20 +9,26 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  List<TodoModel> todoList = [
-    for (var i = 0; i < 20; i++) TodoModel(title: "Title ${i.toString()}")
-  ];
+  TodoController controller = TodoController();
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: todoList.length,
+        itemCount: controller.todoList.length,
         itemBuilder: (context, index) {
           return CheckboxListTile(
-            title: Text(todoList[index].title),
-            value: todoList[index].finished,
-            onChanged: (bool? checked) {},
+            contentPadding: const EdgeInsets.symmetric(horizontal: 26),
+            title: Text(controller.todoList[index].title),
+            value: controller.todoList[index].finished,
+            selected: controller.todoList[index].finished,
+            selectedTileColor: Colors.grey[200],
+            activeColor: Colors.pink[300],
+            onChanged: (bool? checked) {
+              setState(() {
+                controller.checkTask(index);
+              });
+            },
           );
         },
       ),
