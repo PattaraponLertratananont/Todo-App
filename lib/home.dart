@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'todo/screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -36,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+            const TodoList(),
           ],
         ),
       ),
